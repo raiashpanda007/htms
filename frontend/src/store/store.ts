@@ -1,8 +1,10 @@
 import { configureStore } from '@reduxjs/toolkit';
 import login from './Login';
+import search from './Search';
 export const store = configureStore({
     reducer: {
-        login
+        login,
+        search
     },
 });
 

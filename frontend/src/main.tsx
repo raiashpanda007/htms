@@ -11,11 +11,13 @@ import App from './App.tsx'
 import {store} from './store/store.ts'
 import {Provider} from 'react-redux'
 import Login from './pages/Login.tsx';
+import HotelSearch from './pages/HotelSearch.tsx';
 
 const routes = createBrowserRouter(
   createRoutesFromElements(
     <Route path='/'element={<App/>}>
       <Route path='/login' element={<Login/>}/>
+      <Route path='/hotel-search' element={<HotelSearch/>}/>
     </Route>
 
   ))
