@@ -13,6 +13,7 @@ import {Provider} from 'react-redux'
 import Login from './pages/Login.tsx';
 import HotelSearch from './pages/HotelSearch.tsx';
 import Registration from './pages/Registration.tsx';
+import YourBookings from './pages/YourBookings.tsx';
 
 const routes = createBrowserRouter(
   createRoutesFromElements(
@@ -20,6 +21,7 @@ const routes = createBrowserRouter(
       <Route path='/login' element={<Login/>}/>
       <Route path='/registration' element={<Registration/>}/>
       <Route path='/hotel-search' element={<HotelSearch/>}/>
+      <Route path='/your-bookings' element={<YourBookings/>}/>
     </Route>
 
   ))
