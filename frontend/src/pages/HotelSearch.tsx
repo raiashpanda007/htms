@@ -16,6 +16,7 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
+import { useNavigate } from "react-router-dom";
 
 interface City {
   name: string;
@@ -54,6 +55,7 @@ function HotelSearch() {
   const [searchResultVisibility, setSearchResultVisibility] = useState(false);
   const [members, setMembers] = useState<Member[]>([]);
   const [checkInDate, setCheckInDate] = useState<Date | null>(null);
+  const navigate = useNavigate();
 
   useDebounce(() => setDebouncedSearchTerm(searchTerm), 500, [searchTerm]);
 
@@ -108,7 +110,9 @@ function HotelSearch() {
           "Content-Type": "application/json",
         },withCredentials: true
       });
-      alert(`Booking confirmed! Reference ID: ${response.data.data.id}`);
+      navigate("/your-bookings");
+      
+
     } catch (error) {
       console.error("Booking error:", error);
       alert("Failed to book hotel. Please try again later.");

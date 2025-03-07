@@ -1,35 +1,62 @@
+import { useState, useEffect } from "react";
+import axios from "axios";
 import BookingItem from "@/Components/BookingItem";
-
-const dummyBookings = [
-  {
-    id: 1,
-    hotelName: "Grand Palace Hotel",
-    place: "New York, USA",
-    members: [
-      { name: "John Doe", age: 30 },
-      { name: "Jane Doe", age: 28 },
-      { name: "Alice Smith", age: 35 },
-    ],
-  },
-  {
-    id: 2,
-    hotelName: "Ocean View Resort",
-    place: "Miami, USA",
-    members: [
-      { name: "Michael Brown", age: 40 },
-      { name: "Sarah Johnson", age: 32 },
-    ],
-  },
-];
+import { ScrollArea } from "@/components/ui/scroll-area";
 
 function YourBookings() {
+  const [bookings, setBookings] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState("");
+
+  useEffect(() => {
+    async function fetchBookings() {
+      try {
+        const response = await axios.get(
+          "http://localhost:3000/hotel/your-bookings",
+          { withCredentials: true }
+        );
+        const fetchedBookings = response.data.data;
+        const transformedBookings = fetchedBookings.map((booking: any) => ({
+          ...booking,
+          place: booking.city,
+        }));
+        setBookings(transformedBookings);
+      } catch (err) {
+        console.error("Error fetching bookings", err);
+        setError("Failed to load bookings");
+      } finally {
+        setLoading(false);
+      }
+    }
+    fetchBookings();
+  }, []);
+
+  if (loading) {
+    return (
+      <div className="w-full min-h-screen bg-black text-white flex items-center justify-center">
+        Loading...
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className="w-full min-h-screen bg-black text-white flex items-center justify-center">
+        {error}
+      </div>
+    );
+  }
+
   return (
     <div className="w-full min-h-screen bg-black text-white flex flex-col items-center py-10">
       <h1 className="text-4xl font-bold mb-6">Your Bookings</h1>
       <div className="w-full max-w-2xl space-y-4">
-        {dummyBookings.map((booking) => (
-          <BookingItem key={booking.id} {...booking} />
-        ))}
+        <ScrollArea className="h-[calc(100vh-100px)] overflow-y-auto w-full">
+          {bookings.map((booking: any) => (
+            <BookingItem key={booking.id} id={booking.id} {...booking} />
+          ))}
+          
+        </ScrollArea>
       </div>
     </div>
   );

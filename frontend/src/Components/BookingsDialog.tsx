@@ -10,6 +10,7 @@ import {
 } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { useState } from "react";
+import axios from "axios";
 
 interface Member {
   name: string;
@@ -18,15 +19,39 @@ interface Member {
 
 interface BookingsDialogProps {
   members: Member[];
+  id: string;
 }
 
-function BookingsDialog({ members }: BookingsDialogProps) {
-  const [adhaarNumbers, setAdhaarNumbers] = useState<Record<string, string>>(
-    {}
-  );
+function BookingsDialog({ members, id }: BookingsDialogProps) {
+  const [adhaarNumbers, setAdhaarNumbers] = useState<Record<string, string>>({});
 
   const handleInputChange = (name: string, value: string) => {
     setAdhaarNumbers((prev) => ({ ...prev, [name]: value }));
+  };
+
+  const handleConfirmCheckin = async () => {
+    for (const member of members) {
+      if (!adhaarNumbers[member.name] || adhaarNumbers[member.name].trim() === "") {
+        alert("Please provide Aadhaar number for every member.");
+        return;
+      }
+    }
+
+    const payload = {
+      bookingId: id,
+      adhaarNumbers,
+    };
+
+    try {
+      const response = await axios.post(
+        "http://localhost:3000/hotel/checkin",
+        payload,
+        { withCredentials: true }
+      );
+      console.log("Check-in confirmed", response.data);
+    } catch (error) {
+      console.error("Error during check-in", error);
+    }
   };
 
   return (
@@ -44,7 +69,9 @@ function BookingsDialog({ members }: BookingsDialogProps) {
         <div className="mt-4 space-y-3">
           {members.map((member, index) => (
             <div key={index} className="flex flex-col gap-2">
-              <label className="text-gray-300 font-medium">{member.name} (Age: {member.age})</label>
+              <label className="text-gray-300 font-medium">
+                {member.name} (Age: {member.age})
+              </label>
               <Input
                 type="text"
                 placeholder="Enter Aadhaar Number"
@@ -56,7 +83,10 @@ function BookingsDialog({ members }: BookingsDialogProps) {
           ))}
         </div>
         <DialogFooter>
-          <Button className="bg-green-600 hover:bg-green-500 text-white font-semibold">
+          <Button
+            className="bg-green-600 hover:bg-green-500 text-white font-semibold"
+            onClick={handleConfirmCheckin}
+          >
             Confirm Check-in
           </Button>
         </DialogFooter>

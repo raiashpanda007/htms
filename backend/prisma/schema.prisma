@@ -31,7 +31,7 @@ model Member {
   id          String  @id @default(cuid())
   name        String
   age         Int
-  aadharNumber String?  // Nullable since check-in is optional
+  aadharNumber String?  
   bookingId   String
   booking     Booking @relation(fields: [bookingId], references: [id], onDelete: Cascade)
 }
