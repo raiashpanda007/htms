@@ -1,0 +1,36 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id        String    @id @default(cuid())
+  email     String    @unique
+  password  String
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  bookings  Booking[] 
+}
+
+model Booking {
+  id         String   @id @default(cuid())
+  hotelName  String
+  city       String
+  checkedIn Boolean
+  userId     String
+  user       User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  members    Member[] 
+}
+
+model Member {
+  id          String  @id @default(cuid())
+  name        String
+  age         Int
+  aadharNumber String?  // Nullable since check-in is optional
+  bookingId   String
+  booking     Booking @relation(fields: [bookingId], references: [id], onDelete: Cascade)
+}
