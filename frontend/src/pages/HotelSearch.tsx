@@ -1,5 +1,4 @@
-"use client";
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { DatePickerDemo } from "@/Components/DatePicker";
@@ -7,6 +6,15 @@ import { useSelector } from "react-redux";
 import { useDebounce } from "react-use";
 import type { RootState } from "@/store/store";
 import { Button } from "@/components/ui/button";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
 
 interface City {
   name: string;
@@ -30,7 +38,9 @@ function filterCities(searchTerm: string, cities: City[]) {
 }
 
 function filterHotels(city: string, hotels: Hotel[]) {
-  return hotels.filter((hotel) => hotel.city.toLowerCase() === city.toLowerCase());
+  return hotels.filter(
+    (hotel) => hotel.city.toLowerCase() === city.toLowerCase()
+  );
 }
 
 function HotelSearch() {
@@ -141,7 +151,9 @@ function HotelSearch() {
                   <Input
                     placeholder="Name"
                     value={member.name}
-                    onChange={(e) => updateMember(index, "name", e.target.value)}
+                    onChange={(e) =>
+                      updateMember(index, "name", e.target.value)
+                    }
                   />
                   <Input
                     type="text"
@@ -161,7 +173,26 @@ function HotelSearch() {
           <DatePickerDemo />
         </div>
 
-        <Button className="w-full font-semibold">Book Ticket</Button>
+        <Dialog>
+          <DialogTrigger>
+            <Button className="cursor-pointer">
+                Book Ticket
+            </Button>
+          </DialogTrigger>
+          <DialogContent>
+            <DialogHeader>
+              <DialogTitle>Are you absolutely sure?</DialogTitle>
+              <DialogDescription>
+                You can't undo this action. Are you sure you want to proceed?
+              </DialogDescription>
+            </DialogHeader>
+            <DialogFooter>
+                
+                <Button className="cursor-pointer">Book</Button>
+            </DialogFooter>
+          </DialogContent>
+          
+        </Dialog>
       </div>
     </div>
   );
