@@ -5,13 +5,20 @@ const dummyBookings = [
     id: 1,
     hotelName: "Grand Palace Hotel",
     place: "New York, USA",
-    members: ["John Doe", "Jane Doe", "Alice Smith"],
+    members: [
+      { name: "John Doe", age: 30 },
+      { name: "Jane Doe", age: 28 },
+      { name: "Alice Smith", age: 35 },
+    ],
   },
   {
     id: 2,
     hotelName: "Ocean View Resort",
     place: "Miami, USA",
-    members: ["Michael Brown", "Sarah Johnson"],
+    members: [
+      { name: "Michael Brown", age: 40 },
+      { name: "Sarah Johnson", age: 32 },
+    ],
   },
 ];
 

@@ -14,12 +14,14 @@ import Login from './pages/Login.tsx';
 import HotelSearch from './pages/HotelSearch.tsx';
 import Registration from './pages/Registration.tsx';
 import YourBookings from './pages/YourBookings.tsx';
+import LandingPage from './pages/LandingPage.tsx';
 
 const routes = createBrowserRouter(
   createRoutesFromElements(
     <Route path='/'element={<App/>}>
+      <Route path='' element={<LandingPage/>}/>
       <Route path='/login' element={<Login/>}/>
-      <Route path='/registration' element={<Registration/>}/>
+      <Route path='/register' element={<Registration/>}/>
       <Route path='/hotel-search' element={<HotelSearch/>}/>
       <Route path='/your-bookings' element={<YourBookings/>}/>
     </Route>
