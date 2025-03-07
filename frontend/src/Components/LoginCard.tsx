@@ -22,12 +22,25 @@ function LoginCard() {
     }
 
     try {
-      const response = await axios.post("/api/login", { email, password },{withCredentials:true});
-        dispatch(setLogin("true"));
+      const response = await axios.post(
+        "http://localhost:3000/auth/login",
+        { email, password },
+        { withCredentials: true }
+      );
+
+      if (response.data.success === false) {
+        setError(response.data.message || "Login failed.");
+        return;
+      }
+
+      dispatch(setLogin("true"));
       console.log("Login Successful", response.data);
-      
-    } catch (err) {
-      setError("Invalid credentials or server error.");
+
+    } catch (err: any) {
+      // Extract the error message from the server response
+      const errorMessage =
+        err.response?.data?.message || "Invalid credentials or server error.";
+      setError(errorMessage);
     }
   };
 

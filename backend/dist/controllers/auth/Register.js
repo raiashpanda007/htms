@@ -53,7 +53,8 @@ const Register = (0, utils_1.asyncHandler)((req, res) => __awaiter(void 0, void 
             httpOnly: true,
             secure: true,
         };
-        return res.status(loginUser.statusCode).cookie("authorization", loginUser.data, options).json(new utils_1.response(200, "Success", {}));
+        console.log("Successfully registered");
+        return res.status(loginUser.statusCode).cookie("authorization", loginUser.data, options).json(new utils_1.response(200, "Successfully registered", {}));
     }
     catch (error) {
         return res.status(500).json(new utils_1.response(500, "Internal Server Error", { error }));

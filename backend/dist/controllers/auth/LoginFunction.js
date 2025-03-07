@@ -38,6 +38,7 @@ const loginFunction = (email, password) => __awaiter(void 0, void 0, void 0, fun
             return new response_1.default(400, "Invalid password", {});
         }
         const token = jsonwebtoken_1.default.sign({ id: user.id }, process.env.JWT_SECRET);
+        console.log("Logged in successfully");
         return new response_1.default(200, "Login successful", token);
     }
     catch (error) {

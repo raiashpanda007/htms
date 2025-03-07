@@ -27,10 +27,24 @@ function RegisterCard() {
     }
 
     try {
-      await axios.post("/api/register", { email, password });
-      setSuccess("Registration successful! You can now log in.");
-    } catch (err) {
-      setError("Registration failed. Please try again.");
+      const response = await axios.post(
+        "http://localhost:3000/auth/register",
+        { email, password },
+        { withCredentials: true }
+      );
+
+      console.log("Registration Successful", response.data);
+
+      if (response.data.success === false) {
+        setError(response.data.message || "Registration failed.");
+      } else {
+        setSuccess("Registration successful! You can now log in.");
+      }
+
+    } catch (err: any) {
+      // Extract server error message if available
+      const errorMessage = err.response?.data?.message || "Registration failed. Please try again.";
+      setError(errorMessage);
     }
   };
 

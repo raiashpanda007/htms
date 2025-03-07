@@ -40,6 +40,7 @@ const Register = asyncHandler(async (req,res) =>{
             httpOnly: true,
             secure: true,
         }
+        console.log("Successfully registered");
         return res.status(loginUser.statusCode).cookie("authorization",loginUser.data,options).json(new response(200,"Successfully registered",{}));
     } catch (error) {
         return res.status(500).json(new response(500,"Internal Server Error",{error}));
