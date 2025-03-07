@@ -4,6 +4,7 @@ import { Label } from "@/components/ui/label";
 import { DatePickerDemo } from "@/Components/DatePicker";
 import { useSelector } from "react-redux";
 import { useDebounce } from "react-use";
+import axios from "axios";
 import type { RootState } from "@/store/store";
 import { Button } from "@/components/ui/button";
 import {
@@ -52,6 +53,8 @@ function HotelSearch() {
   const [debouncedSearchTerm, setDebouncedSearchTerm] = useState("");
   const [searchResultVisibility, setSearchResultVisibility] = useState(false);
   const [members, setMembers] = useState<Member[]>([]);
+  const [checkInDate, setCheckInDate] = useState<Date | null>(null);
+
   useDebounce(() => setDebouncedSearchTerm(searchTerm), 500, [searchTerm]);
 
   const citiesList = useSelector((state: RootState) => state.search.cities);
@@ -83,6 +86,35 @@ function HotelSearch() {
     const updatedMembers = [...members];
     updatedMembers[index] = { ...updatedMembers[index], [field]: value };
     setMembers(updatedMembers);
+  };
+
+  const bookHotel = async () => {
+    if (!selectedHotel || members.length === 0 || !checkInDate) {
+      alert("Please select a hotel, add at least one traveler, and choose a check-in date.");
+      return;
+    }
+
+    const payload = {
+      hotel: selectedHotel,
+      city: selectedCity,
+      travelers: members,
+      checkInDate: checkInDate.toISOString(), // Converting Date to ISO string
+    };
+
+    try {
+      console.log("input data", payload);
+      const response = await axios.post("https://api.example.com/book-hotel", payload, {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+      
+
+      alert(`Booking confirmed! Reference ID: ${response.data.bookingId}`);
+    } catch (error) {
+      console.error("Booking error:", error);
+      alert("Failed to book hotel. Please try again later.");
+    }
   };
 
   return (
@@ -170,14 +202,12 @@ function HotelSearch() {
 
         <div className="mb-4">
           <Label>Check-in Date</Label>
-          <DatePickerDemo />
+          <DatePickerDemo onChange={(date: Date) => setCheckInDate(date)} />
         </div>
 
         <Dialog>
           <DialogTrigger>
-            <Button className="cursor-pointer">
-                Book Ticket
-            </Button>
+            <Button className="cursor-pointer">Book Ticket</Button>
           </DialogTrigger>
           <DialogContent>
             <DialogHeader>
@@ -187,11 +217,11 @@ function HotelSearch() {
               </DialogDescription>
             </DialogHeader>
             <DialogFooter>
-                
-                <Button className="cursor-pointer">Book</Button>
+              <Button className="cursor-pointer" onClick={bookHotel}>
+                Book
+              </Button>
             </DialogFooter>
           </DialogContent>
-          
         </Dialog>
       </div>
     </div>
