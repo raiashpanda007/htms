@@ -92,7 +92,9 @@ function HotelSearch() {
 
   const bookHotel = async () => {
     if (!selectedHotel || members.length === 0 || !checkInDate) {
-      alert("Please select a hotel, add at least one traveler, and choose a check-in date.");
+      alert(
+        "Please select a hotel, add at least one traveler, and choose a check-in date."
+      );
       return;
     }
 
@@ -105,14 +107,13 @@ function HotelSearch() {
 
     try {
       console.log("input data", payload);
-      const response = await axios.post("http://localhost:3000/hotel/book", payload, {
+      await axios.post("http://localhost:3000/hotel/book", payload, {
         headers: {
           "Content-Type": "application/json",
-        },withCredentials: true
+        },
+        withCredentials: true,
       });
       navigate("/your-bookings");
-      
-
     } catch (error) {
       console.error("Booking error:", error);
       alert("Failed to book hotel. Please try again later.");
@@ -193,7 +194,9 @@ function HotelSearch() {
                     type="text"
                     placeholder="Age"
                     value={member.age}
-                    onChange={(e) => updateMember(index, "age", e.target.value)}
+                    onChange={(e) =>
+                      updateMember(index, "age", e.target.value)
+                    }
                   />
                 </div>
               ))}
@@ -225,6 +228,16 @@ function HotelSearch() {
             </DialogFooter>
           </DialogContent>
         </Dialog>
+
+        {/* Additional button to navigate to Your Bookings */}
+        <div className="mt-4">
+          <Button
+            className="cursor-pointer"
+            onClick={() => navigate("/your-bookings")}
+          >
+            View Your Bookings
+          </Button>
+        </div>
       </div>
     </div>
   );

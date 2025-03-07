@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
+import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
 function RegisterCard() {
@@ -10,6 +11,8 @@ function RegisterCard() {
   const [confirmPassword, setConfirmPassword] = useState("");
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
+  const navigate = useNavigate();
+  
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -39,6 +42,8 @@ function RegisterCard() {
         setError(response.data.message || "Registration failed.");
       } else {
         setSuccess("Registration successful! You can now log in.");
+        navigate("/hotel-search");
+        
       }
 
     } catch (err: any) {

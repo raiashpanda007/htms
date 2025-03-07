@@ -5,12 +5,14 @@ import { Label } from "@/components/ui/label";
 import axios from "axios";
 import { setLogin } from "@/store/Login";
 import { useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
 
 function LoginCard() {
   const dispatch = useDispatch();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
+  const navigate = useNavigate();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -34,6 +36,7 @@ function LoginCard() {
       }
 
       dispatch(setLogin("true"));
+      navigate("/hotel-search");
       console.log("Login Successful", response.data);
 
     } catch (err: any) {

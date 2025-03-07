@@ -35,6 +35,6 @@ const login = (0, asyncHandler_1.default)((req, res) => __awaiter(void 0, void 0
         httpOnly: true,
         secure: true,
     };
-    return res.status(loginResponse.statusCode).cookie("authorization", loginResponse.data, options).json(new response_1.default(200, "Success", {}));
+    return res.status(200).cookie("authorization", loginResponse.data, options).json(new response_1.default(200, "Success", {}));
 }));
 exports.default = login;

@@ -21,7 +21,7 @@ const login = asyncHandler(async (req, res) => {
         httpOnly: true,
         secure: true,
     }
-    return res.status(loginResponse.statusCode).cookie("authorization", loginResponse.data, options).json(new response(200, "Success", {}))
+    return res.status(200).cookie("authorization", loginResponse.data, options).json(new response(200, "Success", {}))
 })
 
 export default login;

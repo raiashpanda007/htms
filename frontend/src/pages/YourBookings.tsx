@@ -53,7 +53,9 @@ function YourBookings() {
       <div className="w-full max-w-2xl space-y-4">
         <ScrollArea className="h-[calc(100vh-100px)] overflow-y-auto w-full">
           {bookings.map((booking: any) => (
-            <BookingItem key={booking.id} id={booking.id} {...booking} />
+           <div className="m-3">
+             <BookingItem key={booking.id} id={booking.id} {...booking} />
+           </div>
           ))}
           
         </ScrollArea>
