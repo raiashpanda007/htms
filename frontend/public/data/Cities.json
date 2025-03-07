@@ -1,0 +1,10 @@
+[
+    { "name": "New York", "country": "USA" },
+    { "name": "Los Angeles", "country": "USA" },
+    { "name": "San Francisco", "country": "USA" },
+    { "name": "Paris", "country": "France" },
+    { "name": "Marseille", "country": "France" },
+    { "name": "Madrid", "country": "Spain" },
+    { "name": "Barcelona", "country": "Spain" },
+    { "name": "Berlin", "country": "Germany" }
+]
