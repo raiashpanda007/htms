@@ -22,7 +22,8 @@ app.get('/', (req, res) => {
 })
 import authRouter from './routes/auth.route';
 app.use('/auth', authRouter);
-
+import hotelRouter from './routes/hotel.routes';
+app.use('/hotel', hotelRouter);
 
 app.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}`);

@@ -24,7 +24,7 @@ const loginFunction = async (email: string, password: string) => {
         if (!isPasswordValid) {
             return new response(400, "Invalid password", {})
         }
-        const token = jwt.sign({ id: user.id }, process.env.JWT_SECRET)
+        const token = jwt.sign({ id: user.id,email }, process.env.JWT_SECRET)
         console.log("Logged in successfully")
         return new response(200, "Login successful",token)
 

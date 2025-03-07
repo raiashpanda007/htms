@@ -20,7 +20,8 @@ model Booking {
   id         String   @id @default(cuid())
   hotelName  String
   city       String
-  checkedIn Boolean
+  checkedIn Boolean  @default(false)
+  checkInAt  DateTime
   userId     String
   user       User     @relation(fields: [userId], references: [id], onDelete: Cascade)
   members    Member[] 

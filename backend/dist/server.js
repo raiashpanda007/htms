@@ -25,6 +25,8 @@ app.get('/', (req, res) => {
 });
 const auth_route_1 = __importDefault(require("./routes/auth.route"));
 app.use('/auth', auth_route_1.default);
+const hotel_routes_1 = __importDefault(require("./routes/hotel.routes"));
+app.use('/hotel', hotel_routes_1.default);
 app.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}`);
 });

@@ -98,19 +98,17 @@ function HotelSearch() {
       hotel: selectedHotel,
       city: selectedCity,
       travelers: members,
-      checkInDate: checkInDate.toISOString(), // Converting Date to ISO string
+      checkInDate: checkInDate.toISOString(),
     };
 
     try {
       console.log("input data", payload);
-      const response = await axios.post("https://api.example.com/book-hotel", payload, {
+      const response = await axios.post("http://localhost:3000/hotel/book", payload, {
         headers: {
           "Content-Type": "application/json",
-        },
+        },withCredentials: true
       });
-      
-
-      alert(`Booking confirmed! Reference ID: ${response.data.bookingId}`);
+      alert(`Booking confirmed! Reference ID: ${response.data.data.id}`);
     } catch (error) {
       console.error("Booking error:", error);
       alert("Failed to book hotel. Please try again later.");

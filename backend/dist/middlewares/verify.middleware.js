@@ -15,20 +15,26 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const utils_1 = require("../utils/utils");
 const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
 const verifyUser = (0, utils_1.asyncHandler)((req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
-    if (!req.headers.authorization) {
+    if (!req.cookies.authorization) {
         return res.status(401).json({ message: "Unauthorized" });
     }
-    const token = req.headers.authorization.split(" ")[1];
+    console.log("1");
+    const token = req.cookies.authorization;
     if (!token) {
         return res.status(401).json({ message: "Unauthorized" });
     }
+    console.log("2");
     if (!process.env.JWT_SECRET) {
         return res.status(500).json({ message: "Internal Server Error" });
     }
+    console.log("3");
     const decoded = jsonwebtoken_1.default.verify(token, process.env.JWT_SECRET);
+    console.log("4");
+    req.user = decoded;
     if (!decoded) {
         return res.status(401).json({ message: "Unauthorized" });
     }
+    console.log("Passed middleware");
     next();
 }));
 exports.default = verifyUser;
